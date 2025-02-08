@@ -1,0 +1,40 @@
+<!-- <div class="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4">Blogs partagés dans le groupe</h2>
+    <button (click)="joinGroup()" class="bg-blue-500 text-white p-2 rounded-md">
+      Rejoindre le groupe
+    </button>
+  
+    <div *ngIf="sharedBlogs.length > 0; else noBlogs">
+      <div *ngFor="let blog of sharedBlogs" class="bg-white p-4 rounded-lg shadow-sm mb-4">
+        <h3 class="text-xl font-semibold mb-2">{{ blog.coverText }}</h3>
+        <p class="text-gray-700 mb-2">{{ blog.content | slice:0:100 }}...</p>
+        <p class="text-sm text-gray-500">Auteur : {{ blog.author }}</p>
+        <button [routerLink]="['/blog', blog.id]" class="text-blue-500 hover:underline mt-2">
+          Lire la suite
+        </button>
+      </div>
+    </div>
+  
+    <ng-template #noBlogs>
+      <p class="text-gray-500">Aucun blog partagé dans ce groupe.</p>
+    </ng-template>
+  </div>
+   -->
+
+   <h2>Blogs partagés dans le groupe</h2>
+<div *ngFor="let blog of sharedBlogs">
+  <h3>{{ blog.coverText }}</h3>
+  <p>{{ blog.content }}</p>
+</div>
+
+<button (click)="joinGroup()">Rejoindre le groupe</button>
+
+<h2>Partager un blog</h2>
+<div *ngIf="userBlogs.length > 0">
+  <label for="blogSelect">Sélectionnez un blog :</label>
+  <select id="blogSelect" [(ngModel)]="selectedBlogId">
+    <option *ngFor="let blog of userBlogs" [value]="blog.id">{{ blog.coverImageUrl }}</option>
+  </select>
+  <button (click)="shareBlog()">Partager dans le groupe</button>
+</div>
+<p *ngIf="userBlogs.length === 0">Vous n'avez aucun blog à partager.</p>

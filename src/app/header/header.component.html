@@ -1,0 +1,80 @@
+<header class="relative">
+  <div class="bg-gray-900 pt-6">
+    <nav
+      class="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6"
+      aria-label="Global"
+    >
+      <div class="flex items-center flex-1">
+        <a href="#" class="flex items-center justify-between w-full md:w-auto">
+          <h1 class="text-4xl font-bold">
+            <span class="italic text-red-500 font-serif drop-shadow-lg">
+              PA
+            </span>
+            <span class="text-white">biosoft</span>
+          </h1>
+        </a>
+
+        <div class="hidden space-x-8 md:flex md:ml-10">
+          <div *ngFor="let route of routes" class="group relative">
+            <a
+              [routerLink]="route.path"
+              class="text-base font-medium text-white hover:text-gray-300"
+            >
+              {{ route.name }}
+            </a>
+            <div
+              class="absolute hidden group-hover:block bg-white text-black p-4 rounded-md shadow-lg w-64"
+            >
+              <p class="text-sm">{{ route.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="hidden md:flex md:items-center md:space-x-6">
+        <button 
+          (click)="toggleLogin()" 
+          class="text-base font-medium text-white hover:text-gray-300"
+        >
+          Log in
+        </button>
+      
+        <a
+          href="#"
+          class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700"
+        >
+          Start free trial
+        </a>
+      </div>
+      
+      <!-- Section LoginComponent qui s'affiche dynamiquement -->
+      <div *ngIf="showLogin" class="login-section bg-white p-6 shadow-lg rounded-md mt-4">
+        <app-login></app-login> <!-- Intégration du LoginComponent -->
+      </div>
+      
+
+      <!-- fin teste  -->
+      <div 
+        [ngClass]="currentUser?.profile?.imageUrl ? 'border-green-500' : 'border-red-500'" 
+        class="flex items-center justify-center w-12 h-12 border-4 rounded-full"
+      >
+        <ng-container *ngIf="currentUser?.profile?.imageUrl; else defaultProfile">
+          <img 
+            [src]="currentUser.profile.imageUrl" 
+            alt="Photo de profil" 
+            class="w-full h-full rounded-full cursor-pointer"
+            routerLink="/auth/user-dashboard"
+            aria-label="Tableau de bord utilisateur" 
+          />
+        </ng-container>
+
+        <ng-template #defaultProfile>
+          <button mat-icon-button [routerLink]="'/auth/user-dashboard'" aria-label="Tableau de bord utilisateur">
+            <mat-icon >account_circle</mat-icon>
+          </button>
+        </ng-template>
+      </div>
+
+    </nav>
+  </div>
+</header>

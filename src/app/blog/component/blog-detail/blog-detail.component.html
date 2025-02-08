@@ -1,0 +1,86 @@
+<div class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg bg-white">
+  <button 
+    mat-button 
+    color="primary" 
+    (click)="goBack()" 
+    class="fixed left-2 z-50 hover:bg-red-200"
+  >
+    <mat-icon>arrow_back</mat-icon> 
+  </button>
+
+  <div class="mt-6">
+    <label for="groupSelect" class="text-sm font-semibold">Partager dans un groupe :</label>
+    <select id="groupSelect" [(ngModel)]="selectedGroupId" class="p-2 border rounded-md w-full mt-2">
+      <option *ngFor="let group of groups" [value]="group.id">{{ group.name }}</option>
+    </select>
+
+    <button 
+      (click)="shareToGroup()" 
+      class="mt-4 py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-all duration-300"
+    >
+      Partager le blog
+    </button>
+
+    <p *ngIf="shareSuccessMessage" class="text-green-500 mt-2">{{ shareSuccessMessage }}</p>
+  </div>
+  
+  <p class="text-3xl font-bold mb-4">{{ blog?.coverText }}</p>
+  <div *ngIf="blog?.coverImageUrl" class="mb-6">
+    <img 
+      [src]="blog.coverImageUrl" 
+      alt="Image de couverture" 
+      (mouseover)="onMouseOver($event)" 
+      (mouseout)="onMouseOut($event)"
+      class="w-full h-64 object-cover rounded-md"
+    />
+  </div>
+
+  <p class="text-gray-500 text-sm mb-6">Publié le : {{ blog?.date | date:'longDate' }}</p>
+
+  <div *ngIf="blog?.chapters && blog.chapters.length > 0">
+    <mat-toolbar color="primary" class="text-white">
+      <span>{{ currentChapterIndex + 1 }} / {{ blog.chapters.length }} Chapitres</span>
+    </mat-toolbar>
+    <div class="flex items-center mb-4">
+      <div class="chapters-container flex items-center">
+        <div *ngFor="let chapter of blog.chapters; let i = index" class="flex items-center">
+          <div 
+            class="chapter-item flex items-center justify-center w-10 h-10 rounded-full border-2 mr-2" 
+            [ngClass]="{
+              'border-green-500 bg-green-200': i < currentChapterIndex,
+              'border-gray-300 bg-white': i >= currentChapterIndex
+            }"
+          >
+            {{ i + 1 }}
+          </div>
+
+          <div *ngIf="i < blog.chapters.length - 1" class="w-2 h-10 border-l-2"
+               [ngClass]="{
+                 'border-green-500': i < currentChapterIndex,
+                 'border-transparent': i >= currentChapterIndex
+               }"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose max-w-none">
+      <h2 #chapterTitle class="text-2xl font-bold">{{ blog.chapters[currentChapterIndex]?.title }}</h2>
+      <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(blog.chapters[currentChapterIndex]?.content)"></div>
+      
+      <div class="flex justify-between mt-4">
+        <button 
+          class="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded"
+          (click)="previousChapter()" 
+          [disabled]="currentChapterIndex === 0">
+          Chapitre Précédent
+        </button>
+        <button 
+          class="bg-gray-300 hover:bg-gray-400 text-black py-2 px-4 rounded"
+          (click)="nextChapter()" 
+          [disabled]="currentChapterIndex === blog.chapters.length - 1">
+          Chapitre Suivant
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

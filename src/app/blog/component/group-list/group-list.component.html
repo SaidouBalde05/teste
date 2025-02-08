@@ -1,0 +1,31 @@
+<!-- group-list.component.html -->
+<div class="container mx-auto p-6">
+    <h2 class="text-2xl font-bold mb-4">Liste des Groupes</h2>
+  
+    <div *ngIf="loading" class="text-center">
+      <p>Chargement des groupes...</p>
+    </div>
+  
+    <div *ngIf="errorMessage" class="text-red-500 text-center">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <div *ngIf="!loading && !errorMessage">
+      <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <li *ngFor="let group of groups" class="bg-gray-800 text-white p-4 rounded-lg shadow-md">
+          <h3 class="font-semibold text-lg mb-2">{{ group.name }}</h3>
+          <p>{{ group.description }}</p>
+          <p class="text-sm mt-2">Membres: {{ group?.members?.length || 0 }}</p>
+          <a [routerLink]="['/groups', group.id, 'blogs']" class="text-blue-500 hover:underline">
+            Voir les blogs partagés
+          </a>
+        </li>
+      </ul>
+      
+  
+      <div *ngIf="groups.length === 0" class="text-center text-gray-400 mt-4">
+        <p>Aucun groupe disponible pour le moment.</p>
+      </div>
+    </div>
+  </div>
+  

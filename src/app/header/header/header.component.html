@@ -1,0 +1,65 @@
+<div class="flex justify-between items-center h-20 bg-gray-100 px-6">
+  <ul class="flex space-x-6">
+    <li>
+      <a 
+        routerLink="blogs/list" 
+        class="text-blue-600 hover:text-blue-800 font-semibold transition duration-200"
+        routerLinkActive="active-link">
+        Liste
+      </a>
+    </li>
+    <li>
+      <a 
+        routerLink="blogs/editor" 
+        class="text-blue-600 hover:text-blue-800 font-semibold transition duration-200"
+        routerLinkActive="active-link">
+        Éditer
+      </a>
+    </li>
+    <li>
+      <a 
+        routerLink="auth/login" 
+        class="text-blue-600 hover:text-blue-800 font-semibold transition duration-200"
+        routerLinkActive="active-link">
+        Connexion
+      </a>
+    </li>
+    <li>
+      <a 
+        routerLink="auth/register" 
+        class="text-blue-600 hover:text-blue-800 font-semibold transition duration-200"
+        routerLinkActive="active-link">
+        Inscription
+      </a>
+    </li>
+    <li>
+      <a 
+      routerLink="/home"
+      class="text-blue-600 hover:text-blue-800 font-semibold transition duration-200"
+      routerLinkActive="active-link">
+      Home
+      </a> 
+    </li>
+  </ul>
+
+  <div 
+    [ngClass]="currentUser?.profile?.imageUrl ? 'border-green-500' : 'border-red-500'" 
+    class="flex items-center justify-center w-12 h-12 border-4 rounded-full"
+  >
+    <ng-container *ngIf="currentUser?.profile?.imageUrl; else defaultProfile">
+      <img 
+        [src]="currentUser.profile.imageUrl" 
+        alt="Photo de profil" 
+        class="w-full h-full rounded-full cursor-pointer"
+        routerLink="/auth/user-dashboard"
+        aria-label="Tableau de bord utilisateur" 
+      />
+    </ng-container>
+
+    <ng-template #defaultProfile>
+      <button mat-icon-button [routerLink]="'/auth/user-dashboard'" aria-label="Tableau de bord utilisateur">
+        <mat-icon >account_circle</mat-icon>
+      </button>
+    </ng-template>
+  </div>
+</div>

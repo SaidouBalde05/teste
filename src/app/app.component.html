@@ -1,0 +1,15 @@
+<div class="flex flex-col h-screen">
+  <app-headers class="fixed w-full top-0 z-10 bg-white shadow"></app-headers>
+  <div class="flex-1 relative">
+    <div 
+      *ngIf="isHomePage" 
+      class="absolute inset-0 bg-gray-900 -z-10">
+    </div>
+    <div class="flex-1 pt-16 pb-8" [ngStyle]="{ 'padding-top': headerHeight + 'px' }">
+      <router-outlet></router-outlet>
+    </div> 
+  </div> 
+
+  <app-footer class="mt-8"></app-footer>
+</div>
+
